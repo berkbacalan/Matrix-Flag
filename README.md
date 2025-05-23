@@ -245,107 +245,76 @@ For support, please:
 2. Open an issue on GitHub
 3. Contact the maintainers
 
-## 🔄 Roadmap
+## 🗺️ Roadmap
 
-### ✅ Tamamlanan Özellikler
+### ✅ Completed Features
+- [x] User Authentication and Authorization
+  - JWT-based authentication
+  - Role-based access control (Admin, Manager, Viewer)
+  - Secure password hashing
+  - User management API
+  - Session management
+- [x] Advanced Targeting Rules
+  - User segmentation
+  - Percentage-based rollout
+  - Time-based rules
+  - Custom attribute support
+  - A/B testing capabilities
+- [x] Analytics Dashboard
+  - Metric management and monitoring
+  - Customizable dashboards
+  - Reporting and analysis
+  - Real-time data visualization
+  - Performance metrics
 
-1. **Kullanıcı Kimlik Doğrulama ve Yetkilendirme**
-   - JWT tabanlı kimlik doğrulama
-   - Rol tabanlı erişim kontrolü (Admin, Manager, Viewer)
-   - Güvenli şifre hashleme
-   - Kullanıcı yönetimi API'si
-   - Oturum yönetimi
+### 🚧 In Progress
+- [ ] Enhanced Security
+  - Two-factor authentication
+  - API key management
+  - IP-based access control
+  - Security audit logs
 
-2. **Gelişmiş Hedefleme Kuralları**
-   - Kullanıcı segmentasyonu
-   - Yüzde tabanlı rollout'lar
-   - Zaman bazlı kurallar
-   - Özel özellik desteği
-   - Karmaşık koşul değerlendirmesi
-   - Redis entegrasyonu
+### 📅 Upcoming Features
+- [ ] SDK Development
+  - Python SDK
+  - JavaScript SDK
+  - Java SDK
+  - Go SDK
+- [ ] CI/CD Integration
+  - GitHub Actions integration
+  - GitLab CI integration
+  - Jenkins integration
+- [ ] Advanced Management Features
+  - Bulk operations
+  - Import/export
+  - Backup and restore
+- [ ] Monitoring & Observability
+  - Prometheus integration
+  - Grafana dashboards
+  - Alert system
+- [ ] Developer Experience
+  - API documentation
+  - Sample applications
+  - Testing tools
+- [ ] Enterprise Features
+  - SSO integration
+  - LDAP/Active Directory support
+  - Audit logging
+- [ ] Multi-region Support
+  - Geographic replication
+  - Local data storage
+  - Low latency
 
-3. **A/B Testi Yetenekleri**
-   - Çoklu varyant desteği
-   - Ağırlıklı varyant dağıtımı
-   - Hedefleme kuralları entegrasyonu
-   - Metrik toplama ve analiz
-   - İstatistiksel analiz (ortalama, güven aralığı)
-   - Deney sonuçları raporlama
-
-### 🚧 Devam Eden Özellikler
-
-1. **Analytics Dashboard**
-   - Deney sonuçları görselleştirme
-   - Metrik takibi ve raporlama
-   - Kullanıcı segment analizi
-   - Performans göstergeleri
-
-### 📅 Yaklaşan Özellikler
-
-1. **Gelişmiş Güvenlik**
-   - İki faktörlü kimlik doğrulama
-   - API anahtarı yönetimi
-   - Rate limiting
-   - IP bazlı kısıtlamalar
-
-2. **SDK Geliştirme**
-   - Python SDK
-   - JavaScript SDK
-   - Go SDK
-   - .NET SDK
-
-3. **CI/CD Entegrasyonu**
-   - GitHub Actions entegrasyonu
-   - Jenkins entegrasyonu
-   - GitLab CI entegrasyonu
-   - Otomatik deployment
-
-4. **Gelişmiş Yönetim Özellikleri**
-   - Toplu işlemler
-   - İçe/dışa aktarma
-   - Yedekleme ve geri yükleme
-   - Audit logging
-
-5. **Monitoring & Observability**
-   - Prometheus entegrasyonu
-   - Grafana dashboard'ları
-   - Uyarı sistemi
-   - Performans metrikleri
-
-6. **Developer Experience**
-   - API dokümantasyonu
-   - Postman koleksiyonları
-   - Örnek uygulamalar
-   - Geliştirici rehberleri
-
-7. **Enterprise Özellikleri**
-   - SSO entegrasyonu
-   - LDAP/Active Directory desteği
-   - Çoklu bölge desteği
-   - SLA garantileri
-
-### 🔮 Gelecek Düşünceler
-
-1. **Makine Öğrenimi Entegrasyonu**
-   - Otomatik varyant optimizasyonu
-   - Kullanıcı davranış analizi
-   - Anomali tespiti
-   - Öngörücü analitik
-
-2. **Çoklu Bölge Desteği**
-   - Coğrafi replikasyon
-   - Yerel veri saklama
-   - Bölgesel yönlendirme
-   - Yük dengeleme
-
-3. **Gelişmiş Test Özellikleri**
-   - Canary deployments
-   - Blue/Green deployments
-   - Chaos testing
-   - Yük testi araçları
-
-4. **Topluluk Özellikleri**
-   - Açık kaynak katkıları
-   - Topluluk forumu
-   - Örnek projeler
-   - Eğitim materyalleri 
+### 🔮 Future Considerations
+- [ ] Machine Learning Integration
+  - Automatic feature optimization
+  - User behavior analysis
+  - Anomaly detection
+- [ ] Advanced Testing Features
+  - Canary deployments
+  - Blue/Green deployments
+  - Chaos testing
+- [ ] Community Features
+  - Feature templates
+  - Shared dashboards
+  - User feedback 
