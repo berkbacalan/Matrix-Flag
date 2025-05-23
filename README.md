@@ -275,6 +275,12 @@ For support, please:
   - System metrics (CPU, Memory)
   - Real-time monitoring
   - Custom dashboards
+- [x] Monitoring & Observability
+  - Prometheus integration
+  - Grafana dashboards
+  - Alert system
+- [x] CI/CD Integration
+  - GitHub Actions integration
 
 ### 🚧 In Progress
 - [ ] Enhanced Security
@@ -289,18 +295,10 @@ For support, please:
   - JavaScript SDK
   - Java SDK
   - Go SDK
-- [ ] CI/CD Integration
-  - GitHub Actions integration
-  - GitLab CI integration
-  - Jenkins integration
 - [ ] Advanced Management Features
   - Bulk operations
   - Import/export
   - Backup and restore
-- [ ] Monitoring & Observability
-  - Prometheus integration
-  - Grafana dashboards
-  - Alert system
 - [ ] Developer Experience
   - API documentation
   - Sample applications
