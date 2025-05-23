@@ -247,102 +247,105 @@ For support, please:
 
 ## 🔄 Roadmap
 
-### ✅ Completed Features
-- [x] User authentication and authorization
-  - JWT-based authentication
-  - Role-based access control (Admin, Manager, Viewer)
-  - Secure password hashing
-  - User management API
-  - Session management
+### ✅ Tamamlanan Özellikler
 
-### 🚧 In Progress
-- [ ] Advanced targeting rules
-  - User segmentation
-  - Percentage-based rollouts
-  - Time-based rules
-  - Custom attributes support
-  - A/B testing capabilities
+1. **Kullanıcı Kimlik Doğrulama ve Yetkilendirme**
+   - JWT tabanlı kimlik doğrulama
+   - Rol tabanlı erişim kontrolü (Admin, Manager, Viewer)
+   - Güvenli şifre hashleme
+   - Kullanıcı yönetimi API'si
+   - Oturum yönetimi
 
-### 📅 Upcoming Features
-- [ ] Analytics Dashboard
-  - Feature flag usage statistics
-  - User engagement metrics
-  - A/B test results visualization
-  - Performance impact analysis
-  - Custom report generation
+2. **Gelişmiş Hedefleme Kuralları**
+   - Kullanıcı segmentasyonu
+   - Yüzde tabanlı rollout'lar
+   - Zaman bazlı kurallar
+   - Özel özellik desteği
+   - Karmaşık koşul değerlendirmesi
+   - Redis entegrasyonu
 
-- [ ] Enhanced Security
-  - Two-factor authentication (2FA)
-  - API key management
-  - IP whitelisting
-  - Audit log enhancements
-  - Security policy enforcement
+3. **A/B Testi Yetenekleri**
+   - Çoklu varyant desteği
+   - Ağırlıklı varyant dağıtımı
+   - Hedefleme kuralları entegrasyonu
+   - Metrik toplama ve analiz
+   - İstatistiksel analiz (ortalama, güven aralığı)
+   - Deney sonuçları raporlama
 
-- [ ] SDK Development
-  - Python SDK
-  - JavaScript/TypeScript SDK
-  - Go SDK
-  - .NET SDK
-  - Mobile SDKs (iOS/Android)
+### 🚧 Devam Eden Özellikler
 
-- [ ] CI/CD Integration
-  - GitHub Actions integration
-  - GitLab CI integration
-  - Jenkins integration
-  - CircleCI integration
-  - Automated deployment hooks
+1. **Analytics Dashboard**
+   - Deney sonuçları görselleştirme
+   - Metrik takibi ve raporlama
+   - Kullanıcı segment analizi
+   - Performans göstergeleri
 
-- [ ] Advanced Management Features
-  - Bulk operations
-  - Import/Export functionality
-  - Environment management
-  - Team management
-  - Project organization
+### 📅 Yaklaşan Özellikler
 
-- [ ] Monitoring & Observability
-  - Real-time metrics
-  - Alert system
-  - Health checks
-  - Performance monitoring
-  - Error tracking
+1. **Gelişmiş Güvenlik**
+   - İki faktörlü kimlik doğrulama
+   - API anahtarı yönetimi
+   - Rate limiting
+   - IP bazlı kısıtlamalar
 
-- [ ] Developer Experience
-  - Enhanced API documentation
-  - Code examples
-  - Integration guides
-  - Best practices
-  - Migration tools
+2. **SDK Geliştirme**
+   - Python SDK
+   - JavaScript SDK
+   - Go SDK
+   - .NET SDK
 
-- [ ] Enterprise Features
-  - SSO integration
-  - LDAP/Active Directory support
-  - Custom branding
-  - Advanced audit logging
-  - Compliance reporting
+3. **CI/CD Entegrasyonu**
+   - GitHub Actions entegrasyonu
+   - Jenkins entegrasyonu
+   - GitLab CI entegrasyonu
+   - Otomatik deployment
 
-### 🔮 Future Considerations
-- [ ] Machine Learning Integration
-  - Automated feature optimization
-  - User behavior prediction
-  - Smart rollout suggestions
-  - Performance optimization
+4. **Gelişmiş Yönetim Özellikleri**
+   - Toplu işlemler
+   - İçe/dışa aktarma
+   - Yedekleme ve geri yükleme
+   - Audit logging
 
-- [ ] Multi-region Support
-  - Global deployment
-  - Region-specific rules
-  - Data synchronization
-  - Latency optimization
+5. **Monitoring & Observability**
+   - Prometheus entegrasyonu
+   - Grafana dashboard'ları
+   - Uyarı sistemi
+   - Performans metrikleri
 
-- [ ] Advanced Testing
-  - Automated testing suite
-  - Load testing
-  - Security testing
-  - Integration testing
-  - Performance benchmarking
+6. **Developer Experience**
+   - API dokümantasyonu
+   - Postman koleksiyonları
+   - Örnek uygulamalar
+   - Geliştirici rehberleri
 
-- [ ] Community Features
-  - Public API marketplace
-  - Community templates
-  - Plugin system
-  - Custom integrations
-  - Community forums 
+7. **Enterprise Özellikleri**
+   - SSO entegrasyonu
+   - LDAP/Active Directory desteği
+   - Çoklu bölge desteği
+   - SLA garantileri
+
+### 🔮 Gelecek Düşünceler
+
+1. **Makine Öğrenimi Entegrasyonu**
+   - Otomatik varyant optimizasyonu
+   - Kullanıcı davranış analizi
+   - Anomali tespiti
+   - Öngörücü analitik
+
+2. **Çoklu Bölge Desteği**
+   - Coğrafi replikasyon
+   - Yerel veri saklama
+   - Bölgesel yönlendirme
+   - Yük dengeleme
+
+3. **Gelişmiş Test Özellikleri**
+   - Canary deployments
+   - Blue/Green deployments
+   - Chaos testing
+   - Yük testi araçları
+
+4. **Topluluk Özellikleri**
+   - Açık kaynak katkıları
+   - Topluluk forumu
+   - Örnek projeler
+   - Eğitim materyalleri 
