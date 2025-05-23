@@ -1,11 +1,11 @@
 from typing import List, Dict, Any
 from fastapi import APIRouter, Depends, HTTPException, status
-from ...core.deps import get_current_manager_user
-from ...models.targeting import (
+from app.core.deps import get_current_manager_user
+from app.models.targeting import (
     TargetingRule, TargetingRuleGroup, UserSegment,
     TargetingEvaluation
 )
-from ...services.targeting import targeting_service
+from app.services.targeting import targeting_service
 
 router = APIRouter()
 

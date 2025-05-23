@@ -1,13 +1,13 @@
 from typing import List, Dict, Any, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
 from datetime import datetime, timedelta
-from ....models.analytics import (
+from app.models.analytics import (
     MetricDefinition, MetricValue, MetricAggregation,
     Dashboard, Widget, Report, ReportResult,
     TimeRange
 )
-from ....services.analytics import analytics_service
-from ....core.deps import get_current_manager_user
+from app.services.analytics import analytics_service
+from app.core.deps import get_current_manager_user
 
 router = APIRouter()
 

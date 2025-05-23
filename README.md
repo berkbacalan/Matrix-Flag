@@ -266,6 +266,15 @@ For support, please:
   - Reporting and analysis
   - Real-time data visualization
   - Performance metrics
+- [x] Monitoring & Observability
+  - Prometheus integration
+  - Grafana dashboards
+  - HTTP request metrics
+  - User operation metrics
+  - Redis operation metrics
+  - System metrics (CPU, Memory)
+  - Real-time monitoring
+  - Custom dashboards
 
 ### 🚧 In Progress
 - [ ] Enhanced Security
@@ -317,4 +326,193 @@ For support, please:
 - [ ] Community Features
   - Feature templates
   - Shared dashboards
-  - User feedback 
+  - User feedback
+
+## 🎨 Modern and User-Friendly Interface
+
+Matrix Flag offers a modern and user-friendly interface for managing feature flags and remote configurations.
+
+## 📊 Prometheus and Grafana Monitoring
+
+The service integrates with Prometheus and Grafana for monitoring and metrics collection.
+
+### Monitoring Metrics
+
+The service collects and tracks the following metrics:
+
+#### HTTP Metrics
+- `http_requests_total`: Total HTTP request count
+- `http_request_duration_seconds`: HTTP request duration
+
+#### User Metrics
+- `user_operations_total`: User operation count (create, update, delete)
+- `user_login_attempts_total`: Login attempt count
+- `active_users_total`: Active user count
+
+#### Redis Metrics
+- `redis_operations_total`: Redis operation count
+- `redis_operation_duration_seconds`: Redis operation duration
+
+#### System Metrics
+- `system_memory_usage_bytes`: Memory usage
+- `system_cpu_usage_percent`: CPU usage
+
+### Monitoring Tools
+
+1. Prometheus:
+   - Access Prometheus metrics by navigating to `http://localhost:9090`
+   - Use the "Graph" tab to query metrics
+   - Enter metric name (e.g., `user_operations_total`)
+   - Click "Execute"
+
+2. Grafana:
+   - Access Grafana by navigating to `http://localhost:3000`
+   - Login with username: admin, password: admin
+   - Add Prometheus as a data source (URL: http://prometheus:9090)
+   - Create new dashboards
+
+### Monitoring Features
+
+- Health check endpoint: `GET /health`
+- Webhook delivery status logging
+- Redis connection status monitoring
+- API response time tracking
+
+## 🔄 Webhook Integration
+
+Matrix Flag supports webhook notifications for real-time updates and integrations.
+
+### Webhook Usage
+
+1. **Creating a Webhook**:
+   - Use the `POST /api/v1/flags/webhooks/{url}` endpoint to add a new webhook URL.
+   - The webhook URL should be a valid HTTP or HTTPS endpoint.
+
+2. **Removing a Webhook**:
+   - Use the `DELETE /api/v1/flags/webhooks/{url}` endpoint to remove an existing webhook URL.
+
+## 🎨 Modern and User-Friendly Interface
+
+Matrix Flag offers a modern and user-friendly interface for managing feature flags and remote configurations.
+
+## 📊 Prometheus and Grafana Monitoring
+
+The service integrates with Prometheus and Grafana for monitoring and metrics collection.
+
+### Monitoring Metrics
+
+The service collects and tracks the following metrics:
+
+#### HTTP Metrics
+- `http_requests_total`: Total HTTP request count
+- `http_request_duration_seconds`: HTTP request duration
+
+#### User Metrics
+- `user_operations_total`: User operation count (create, update, delete)
+- `user_login_attempts_total`: Login attempt count
+- `active_users_total`: Active user count
+
+#### Redis Metrics
+- `redis_operations_total`: Redis operation count
+- `redis_operation_duration_seconds`: Redis operation duration
+
+#### Sistem Metrikleri
+- `system_memory_usage_bytes`: Bellek kullanımı
+- `system_cpu_usage_percent`: CPU kullanımı
+
+### Monitoring Tools
+
+1. Prometheus:
+   - Access Prometheus metrics by navigating to `http://localhost:9090`
+   - Use the "Graph" tab to query metrics
+   - Enter metric name (örn: `user_operations_total`)
+   - Click "Execute"
+
+2. Grafana:
+   - Access Grafana by navigating to `http://localhost:3000`
+   - Login with username: admin, Şifre: admin
+   - Prometheus veri kaynağını ekleyin (URL: http://prometheus:9090)
+   - Yeni dashboard'lar oluşturun
+
+### Monitoring Features
+
+- Health check endpoint: `GET /health`
+- Webhook delivery status logging
+- Redis connection status monitoring
+- API response time tracking
+
+## 🔄 Webhook Integration
+
+Matrix Flag supports webhook notifications for real-time updates and integrations.
+
+### Webhook Usage
+
+1. **Creating a Webhook**:
+   - Use the `POST /api/v1/flags/webhooks/{url}` endpoint to add a new webhook URL.
+   - The webhook URL should be a valid HTTP or HTTPS endpoint.
+
+2. **Removing a Webhook**:
+   - Use the `DELETE /api/v1/flags/webhooks/{url}` endpoint to remove an existing webhook URL.
+
+## 🎨 Modern and User-Friendly Interface
+
+Matrix Flag offers a modern and user-friendly interface for managing feature flags and remote configurations.
+
+## 📊 Prometheus and Grafana Monitoring
+
+The service integrates with Prometheus and Grafana for monitoring and metrics collection.
+
+### Monitoring Metrics
+
+The service collects and tracks the following metrics:
+
+#### HTTP Metrics
+- `http_requests_total`: Total HTTP request count
+- `http_request_duration_seconds`: HTTP request duration
+
+#### User Metrics
+- `user_operations_total`: User operation count (create, update, delete)
+- `user_login_attempts_total`: Login attempt count
+- `active_users_total`: Active user count
+
+#### Redis Metrics
+- `redis_operations_total`: Redis operation count
+- `redis_operation_duration_seconds`: Redis operation duration
+
+#### Sistem Metrikleri
+- `system_memory_usage_bytes`: Bellek kullanımı
+- `system_cpu_usage_percent`: CPU kullanımı
+
+### Monitoring Tools
+
+1. Prometheus:
+   - Access Prometheus metrics by navigating to `http://localhost:9090`
+   - Use the "Graph" tab to query metrics
+   - Enter metric name (örn: `user_operations_total`)
+   - Click "Execute"
+
+2. Grafana:
+   - Access Grafana by navigating to `http://localhost:3000`
+   - Login with username: admin, Şifre: admin
+   - Prometheus veri kaynağını ekleyin (URL: http://prometheus:9090)
+   - Yeni dashboard'lar oluşturun
+
+### Monitoring Features
+
+- Health check endpoint: `GET /health`
+- Webhook delivery status logging
+- Redis connection status monitoring
+- API response time tracking
+
+## 🔄 Webhook Integration
+
+Matrix Flag supports webhook notifications for real-time updates and integrations.
+
+### Webhook Usage
+
+1. **Creating a Webhook**:
+   - Use the `POST /api/v1/flags/webhooks/{url}` endpoint to add a new webhook URL.
+   - The webhook URL should be a valid HTTP or HTTPS endpoint.
+
+2. **Removing a Webhook**:
+   - Use the `DELETE /api/v1/flags/webhooks/{url}` endpoint to remove an existing webhook URL. 
