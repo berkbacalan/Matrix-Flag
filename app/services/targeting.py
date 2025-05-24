@@ -4,9 +4,14 @@ import hashlib
 import json
 from ..core.redis import get_redis
 from ..models.targeting import (
-    TargetingRule, TargetingRuleGroup, UserSegment,
-    TargetingCondition, TargetingOperator, TargetingEvaluation
+    TargetingRule,
+    TargetingRuleGroup,
+    UserSegment,
+    TargetingCondition,
+    TargetingOperator,
+    TargetingEvaluation,
 )
+
 
 class TargetingService:
     def __init__(self):
@@ -17,7 +22,9 @@ class TargetingService:
             self.redis = await get_redis()
         return self.redis
 
-    def _evaluate_condition(self, condition: TargetingCondition, context: Dict[str, Any]) -> bool:
+    def _evaluate_condition(
+        self, condition: TargetingCondition, context: Dict[str, Any]
+    ) -> bool:
         if condition.attribute not in context:
             return False
 
@@ -29,28 +36,46 @@ class TargetingService:
         elif condition.operator == TargetingOperator.NOT_EQUALS:
             return value != target_value
         elif condition.operator == TargetingOperator.CONTAINS:
-            return target_value in value if isinstance(value, (list, str)) else False
+            return target_value in value if isinstance(
+                value, (list, str)) else False
         elif condition.operator == TargetingOperator.NOT_CONTAINS:
-            return target_value not in value if isinstance(value, (list, str)) else True
+            return target_value not in value if isinstance(
+                value, (list, str)) else True
         elif condition.operator == TargetingOperator.GREATER_THAN:
-            return value > target_value if isinstance(value, (int, float)) else False
+            return value > target_value if isinstance(
+                value, (int, float)) else False
         elif condition.operator == TargetingOperator.LESS_THAN:
-            return value < target_value if isinstance(value, (int, float)) else False
+            return value < target_value if isinstance(
+                value, (int, float)) else False
         elif condition.operator == TargetingOperator.IN:
-            return value in target_value if isinstance(target_value, list) else False
+            return value in target_value if isinstance(
+                target_value, list) else False
         elif condition.operator == TargetingOperator.NOT_IN:
-            return value not in target_value if isinstance(target_value, list) else False
+            return (
+                value not in target_value if isinstance(
+                    target_value,
+                    list) else False)
         elif condition.operator == TargetingOperator.BETWEEN:
             if not isinstance(target_value, list) or len(target_value) != 2:
                 return False
-            return target_value[0] <= value <= target_value[1] if isinstance(value, (int, float)) else False
+            return (
+                target_value[0] <= value <= target_value[1]
+                if isinstance(value, (int, float))
+                else False
+            )
         elif condition.operator == TargetingOperator.NOT_BETWEEN:
             if not isinstance(target_value, list) or len(target_value) != 2:
                 return False
-            return not (target_value[0] <= value <= target_value[1]) if isinstance(value, (int, float)) else True
+            return (
+                not (target_value[0] <= value <= target_value[1])
+                if isinstance(value, (int, float))
+                else True
+            )
         return False
 
-    def _evaluate_rule(self, rule: TargetingRule, context: Dict[str, Any]) -> TargetingEvaluation:
+    def _evaluate_rule(
+        self, rule: TargetingRule, context: Dict[str, Any]
+    ) -> TargetingEvaluation:
         matched_conditions = []
         unmatched_conditions = []
 
@@ -68,7 +93,7 @@ class TargetingService:
                 result=False,
                 matched_conditions=[],
                 unmatched_conditions=[c.attribute for c in rule.conditions],
-                evaluation_time=now
+                evaluation_time=now,
             )
         if rule.end_time and now > rule.end_time:
             return TargetingEvaluation(
@@ -76,12 +101,14 @@ class TargetingService:
                 result=False,
                 matched_conditions=[],
                 unmatched_conditions=[c.attribute for c in rule.conditions],
-                evaluation_time=now
+                evaluation_time=now,
             )
 
         # Check percentage if specified
         if rule.percentage is not None:
-            context_hash = hashlib.md5(json.dumps(context, sort_keys=True).encode()).hexdigest()
+            context_hash = hashlib.md5(
+                json.dumps(context, sort_keys=True).encode()
+            ).hexdigest()
             hash_int = int(context_hash, 16)
             percentage_match = (hash_int % 100) < rule.percentage
             if not percentage_match:
@@ -89,8 +116,9 @@ class TargetingService:
                     rule_id=rule.name,
                     result=False,
                     matched_conditions=[],
-                    unmatched_conditions=[c.attribute for c in rule.conditions],
-                    evaluation_time=now
+                    unmatched_conditions=[
+                        c.attribute for c in rule.conditions],
+                    evaluation_time=now,
                 )
 
         return TargetingEvaluation(
@@ -98,10 +126,12 @@ class TargetingService:
             result=len(matched_conditions) == len(rule.conditions),
             matched_conditions=matched_conditions,
             unmatched_conditions=unmatched_conditions,
-            evaluation_time=now
+            evaluation_time=now,
         )
 
-    async def evaluate_rules(self, rules: List[TargetingRule], context: Dict[str, Any]) -> List[TargetingEvaluation]:
+    async def evaluate_rules(
+        self, rules: List[TargetingRule], context: Dict[str, Any]
+    ) -> List[TargetingEvaluation]:
         return [self._evaluate_rule(rule, context) for rule in rules]
 
     async def create_rule(self, rule: TargetingRule) -> TargetingRule:
@@ -118,7 +148,9 @@ class TargetingService:
             return None
         return TargetingRule(**rule_data)
 
-    async def update_rule(self, name: str, rule: TargetingRule) -> Optional[TargetingRule]:
+    async def update_rule(
+        self, name: str, rule: TargetingRule
+    ) -> Optional[TargetingRule]:
         redis = await self._get_redis()
         existing_rule = await self.get_rule(name)
         if not existing_rule:
@@ -161,7 +193,9 @@ class TargetingService:
             return None
         return UserSegment(**segment_data)
 
-    async def update_segment(self, name: str, segment: UserSegment) -> Optional[UserSegment]:
+    async def update_segment(
+        self, name: str, segment: UserSegment
+    ) -> Optional[UserSegment]:
         redis = await self._get_redis()
         existing_segment = await self.get_segment(name)
         if not existing_segment:
@@ -190,4 +224,5 @@ class TargetingService:
                 segments.append(UserSegment(**segment_data))
         return segments
 
-targeting_service = TargetingService() 
+
+targeting_service = TargetingService()

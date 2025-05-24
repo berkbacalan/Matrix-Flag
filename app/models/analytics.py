@@ -3,11 +3,13 @@ from typing import Optional, List, Dict, Any
 from datetime import datetime
 from enum import Enum
 
+
 class MetricType(str, Enum):
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
+
 
 class TimeRange(str, Enum):
     HOUR = "hour"
@@ -15,6 +17,7 @@ class TimeRange(str, Enum):
     WEEK = "week"
     MONTH = "month"
     CUSTOM = "custom"
+
 
 class MetricDefinition(BaseModel):
     name: str
@@ -24,11 +27,13 @@ class MetricDefinition(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
+
 class MetricValue(BaseModel):
     metric_name: str
     value: float
     labels: Dict[str, str] = Field(default_factory=dict)
     timestamp: datetime = Field(default_factory=datetime.utcnow)
+
 
 class MetricAggregation(BaseModel):
     metric_name: str
@@ -44,12 +49,14 @@ class MetricAggregation(BaseModel):
     avg: float
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
+
 class Dashboard(BaseModel):
     name: str
     description: Optional[str] = None
     widgets: List[Dict[str, Any]] = Field(default_factory=list)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
+
 
 class Widget(BaseModel):
     name: str
@@ -60,6 +67,7 @@ class Widget(BaseModel):
     size: Dict[str, int] = Field(default_factory=dict)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
+
 
 class Report(BaseModel):
     name: str
@@ -72,10 +80,11 @@ class Report(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
+
 class ReportResult(BaseModel):
     report_id: str
     metrics: Dict[str, MetricAggregation]
     generated_at: datetime = Field(default_factory=datetime.utcnow)
     execution_time: float
     status: str
-    error: Optional[str] = None 
+    error: Optional[str] = None

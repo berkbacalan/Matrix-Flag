@@ -4,10 +4,17 @@ import json
 import statistics
 from ..core.redis import get_redis
 from ..models.analytics import (
-    MetricDefinition, MetricValue, MetricAggregation,
-    Dashboard, Widget, Report, ReportResult,
-    MetricType, TimeRange
+    MetricDefinition,
+    MetricValue,
+    MetricAggregation,
+    Dashboard,
+    Widget,
+    Report,
+    ReportResult,
+    MetricType,
+    TimeRange,
 )
+
 
 class AnalyticsService:
     def __init__(self):
@@ -18,7 +25,9 @@ class AnalyticsService:
             self.redis = await get_redis()
         return self.redis
 
-    async def create_metric(self, metric: MetricDefinition) -> MetricDefinition:
+    async def create_metric(
+            self,
+            metric: MetricDefinition) -> MetricDefinition:
         """Create a new metric definition."""
         redis = await self._get_redis()
         metric_dict = metric.model_dump()
@@ -50,8 +59,7 @@ class AnalyticsService:
         redis = await self._get_redis()
         metric_data = metric_value.model_dump()
         await redis.lpush(
-            f"metric_values:{metric_value.metric_name}",
-            json.dumps(metric_data)
+            f"metric_values:{metric_value.metric_name}", json.dumps(metric_data)
         )
 
     async def get_metric_values(
@@ -59,13 +67,13 @@ class AnalyticsService:
         metric_name: str,
         start_time: datetime,
         end_time: datetime,
-        labels: Optional[Dict[str, str]] = None
+        labels: Optional[Dict[str, str]] = None,
     ) -> List[MetricValue]:
         """Get metric values within a time range."""
         redis = await self._get_redis()
         values = await redis.lrange(f"metric_values:{metric_name}", 0, -1)
         metric_values = []
-        
+
         for value in values:
             data = json.loads(value)
             timestamp = datetime.fromisoformat(data["timestamp"])
@@ -74,7 +82,7 @@ class AnalyticsService:
                     data["labels"].get(k) == v for k, v in labels.items()
                 ):
                     metric_values.append(MetricValue(**data))
-        
+
         return sorted(metric_values, key=lambda x: x.timestamp)
 
     async def aggregate_metric(
@@ -83,7 +91,7 @@ class AnalyticsService:
         time_range: TimeRange,
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None,
-        labels: Optional[Dict[str, str]] = None
+        labels: Optional[Dict[str, str]] = None,
     ) -> MetricAggregation:
         """Aggregate metric values for a time range."""
         if end_time is None:
@@ -111,7 +119,7 @@ class AnalyticsService:
                 sum=0,
                 min=0,
                 max=0,
-                avg=0
+                avg=0,
             )
 
         value_list = [v.value for v in values]
@@ -126,7 +134,7 @@ class AnalyticsService:
             sum=sum(value_list),
             min=min(value_list),
             max=max(value_list),
-            avg=statistics.mean(value_list)
+            avg=statistics.mean(value_list),
         )
 
     async def create_dashboard(self, dashboard: Dashboard) -> Dashboard:
@@ -145,7 +153,9 @@ class AnalyticsService:
             return None
         return Dashboard(**dashboard_data)
 
-    async def update_dashboard(self, name: str, dashboard: Dashboard) -> Optional[Dashboard]:
+    async def update_dashboard(
+        self, name: str, dashboard: Dashboard
+    ) -> Optional[Dashboard]:
         """Update an existing dashboard."""
         redis = await self._get_redis()
         existing_dashboard = await self.get_dashboard(name)
@@ -206,11 +216,7 @@ class AnalyticsService:
         for metric_name in report.metrics:
             try:
                 aggregation = await self.aggregate_metric(
-                    metric_name,
-                    report.time_range,
-                    start_time,
-                    end_time,
-                    report.filters
+                    metric_name, report.time_range, start_time, end_time, report.filters
                 )
                 metrics[metric_name] = aggregation
             except Exception as e:
@@ -219,14 +225,15 @@ class AnalyticsService:
                     metrics={},
                     execution_time=0,
                     status="error",
-                    error=str(e)
+                    error=str(e),
                 )
 
         return ReportResult(
             report_id=name,
             metrics=metrics,
             execution_time=0,  # TODO: Implement execution time tracking
-            status="success"
+            status="success",
         )
 
-analytics_service = AnalyticsService() 
+
+analytics_service = AnalyticsService()
