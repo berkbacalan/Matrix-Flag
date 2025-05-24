@@ -106,9 +106,7 @@ class FeatureFlagService:
                         url, json=event.model_dump(), timeout=settings.WEBHOOK_TIMEOUT
                     ) as response:
                         if response.status >= 400:
-                            print(
-                                f"Webhook failed for {url}: {
-                                    response.status}")
+                            print(f"Webhook failed for {url}: {response.status}")
                 except Exception as e:
                     print(f"Webhook error for {url}: {str(e)}")
 
