@@ -285,6 +285,11 @@ For support, please:
   - API documentation
   - Sample applications
   - Testing tools
+- [x] SDK Development
+  - Python SDK
+  - JavaScript SDK
+  - Java SDK
+  - Go SDK
 
 ### 🚧 In Progress
 - [ ] Enhanced Security
@@ -294,11 +299,6 @@ For support, please:
   - Security audit logs
 
 ### 📅 Upcoming Features
-- [ ] SDK Development
-  - Python SDK
-  - JavaScript SDK
-  - Java SDK
-  - Go SDK
 - [ ] Advanced Management Features
   - Bulk operations
   - Import/export

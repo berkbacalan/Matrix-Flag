@@ -1,41 +1,59 @@
-# Python bytecode files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
-
-# Distribution / packaging
-dist/
+*.so
+.Python
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
 *.egg-info/
-
-# Virtual environment
-venv/
-env/
+.installed.cfg
+*.egg
+MANIFEST
 .env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
-# IDE specific files
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+static/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Redis
+*.rdb
+
+# IDE
 .idea/
 .vscode/
 *.swp
 *.swo
 
-# Logs
-*.log
-
-# Local development settings
+# Environment
+.env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*.local
 
-# Coverage reports
-htmlcov/
-.coverage
-.coverage.*
-coverage.xml
-*.cover
-
-*.pyc
-*.*.pyc
-*.pyc.*
-*/__pycache__/*.*.pyc
+# Misc
+.DS_Store
+Thumbs.db
