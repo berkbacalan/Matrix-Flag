@@ -1,0 +1,20 @@
+import pytest
+import asyncio
+from typing import Generator
+
+@pytest.fixture(scope="session")
+def event_loop() -> Generator[asyncio.AbstractEventLoop, None, None]:
+    loop = asyncio.get_event_loop_policy().new_event_loop()
+    yield loop
+    loop.close()
+
+# Configure pytest-asyncio
+def pytest_configure(config):
+    config.addinivalue_line(
+        "asyncio_mode",
+        "strict"
+    )
+    config.addinivalue_line(
+        "asyncio_default_fixture_loop_scope",
+        "function"
+    ) 

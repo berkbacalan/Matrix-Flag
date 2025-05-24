@@ -1,20 +1,32 @@
 import { MatrixFlagClient } from '../client';
 import { FeatureFlag, FeatureFlagCreate, FeatureFlagUpdate } from '../types';
 import axios from 'axios';
+import { NetworkError } from '../errors';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('MatrixFlagClient', () => {
     let client: MatrixFlagClient;
-    const mockConfig = {
-        baseUrl: 'https://api.matrixflag.com',
-        apiKey: 'test-api-key'
-    };
+    const apiKey = 'test-api-key';
+    const baseUrl = 'https://api.matrixflag.com';
 
     beforeEach(() => {
-        client = new MatrixFlagClient(mockConfig);
+        client = new MatrixFlagClient(apiKey, baseUrl);
         jest.clearAllMocks();
+    });
+
+    describe('constructor', () => {
+        it('should create client with default base URL', () => {
+            const defaultClient = new MatrixFlagClient(apiKey);
+            expect(defaultClient['baseUrl']).toBe('https://api.matrixflag.com');
+        });
+
+        it('should create client with custom base URL', () => {
+            const customUrl = 'https://custom.matrixflag.com';
+            const customClient = new MatrixFlagClient(apiKey, customUrl);
+            expect(customClient['baseUrl']).toBe(customUrl);
+        });
     });
 
     describe('listFeatureFlags', () => {
@@ -72,24 +84,38 @@ describe('MatrixFlagClient', () => {
     });
 
     describe('getFeatureFlag', () => {
-        it('should get a feature flag by id', async () => {
-            const mockFlag: FeatureFlag = {
-                id: 1,
-                name: 'test-flag',
-                isActive: true,
-                environment: 'production',
-                createdAt: '2024-01-01T00:00:00Z',
-                updatedAt: '2024-01-01T00:00:00Z'
+        it('should return feature flag when it exists', async () => {
+            const mockResponse = {
+                data: {
+                    id: 'test-flag',
+                    name: 'Test Flag',
+                    description: 'Test Description',
+                    enabled: true,
+                    created_at: '2024-01-01T00:00:00Z',
+                    updated_at: '2024-01-01T00:00:00Z'
+                }
             };
 
-            mockedAxios.request.mockResolvedValueOnce({ data: mockFlag });
+            mockedAxios.request.mockResolvedValueOnce(mockResponse);
 
-            const result = await client.getFeatureFlag(1);
-            expect(result).toEqual(mockFlag);
+            const result = await client.getFeatureFlag('test-flag');
+
+            expect(result).toEqual(mockResponse.data);
             expect(mockedAxios.request).toHaveBeenCalledWith({
                 method: 'GET',
-                url: '/api/v1/feature-flags/1'
+                url: `${baseUrl}/api/v1/flags/test-flag`,
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json'
+                }
             });
+        });
+
+        it('should throw NetworkError when request fails', async () => {
+            const error = new Error('Network error');
+            mockedAxios.request.mockRejectedValueOnce(error);
+
+            await expect(client.getFeatureFlag('test-flag')).rejects.toThrow(NetworkError);
         });
     });
 

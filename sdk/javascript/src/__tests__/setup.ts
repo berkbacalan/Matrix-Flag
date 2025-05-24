@@ -5,10 +5,10 @@ jest.setTimeout(10000);
 
 // Global test setup
 beforeAll(() => {
-  // Add any global setup here
+  // Setup code that runs before all tests
 });
 
 // Global test teardown
 afterAll(() => {
-  // Add any global cleanup here
+  // Cleanup code that runs after all tests
 }); 
