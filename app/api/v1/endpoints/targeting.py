@@ -3,7 +3,6 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from app.core.deps import get_current_manager_user
 from app.models.targeting import (
     TargetingRule,
-    TargetingRuleGroup,
     UserSegment,
     TargetingEvaluation,
 )

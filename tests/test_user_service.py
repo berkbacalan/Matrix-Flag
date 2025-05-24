@@ -1,6 +1,5 @@
 import pytest
 from app.services.user import UserService
-from app.models.user import User
 
 
 @pytest.mark.asyncio

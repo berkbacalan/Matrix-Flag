@@ -1,12 +1,11 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
-from datetime import datetime, timedelta
+from datetime import datetime
 from app.models.analytics import (
     MetricDefinition,
     MetricValue,
     MetricAggregation,
     Dashboard,
-    Widget,
     Report,
     ReportResult,
     TimeRange,

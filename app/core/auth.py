@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 from jose import JWTError, jwt
 from passlib.context import CryptContext
-from ..models.user import UserInDB, TokenData, UserRole
+from ..models.user import TokenData, UserRole
 from ..core.config import settings
 import uuid
 

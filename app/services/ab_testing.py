@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional, Tuple
+from typing import List, Dict, Any, Optional
 from datetime import datetime
 import hashlib
 import json
@@ -7,7 +7,6 @@ import statistics
 from ..core.redis import get_redis
 from ..models.ab_testing import (
     Experiment,
-    Variant,
     ExperimentStatus,
     ExperimentAssignment,
     MetricValue,

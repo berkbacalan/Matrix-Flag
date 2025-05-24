@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from ....models.user import UserCreate, User, Token
 from ....services.user import user_service
 from ....core.auth import verify_password, create_access_token
-from ....core.deps import get_current_active_user, get_current_admin_user
+from ....core.deps import get_current_active_user
 from ....core.metrics import record_user_operation, record_login_attempt
 
 router = APIRouter()

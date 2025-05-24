@@ -3,7 +3,6 @@ from prometheus_client.openmetrics.exposition import generate_latest
 from fastapi import Request, Response
 import time
 from typing import Callable
-import asyncio
 
 # HTTP Metrics
 REQUEST_COUNT = Counter(

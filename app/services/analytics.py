@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Optional
 from datetime import datetime, timedelta
 import json
 import statistics
@@ -8,10 +8,8 @@ from ..models.analytics import (
     MetricValue,
     MetricAggregation,
     Dashboard,
-    Widget,
     Report,
     ReportResult,
-    MetricType,
     TimeRange,
 )
 

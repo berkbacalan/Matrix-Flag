@@ -5,7 +5,6 @@ import json
 from ..core.redis import get_redis
 from ..models.targeting import (
     TargetingRule,
-    TargetingRuleGroup,
     UserSegment,
     TargetingCondition,
     TargetingOperator,

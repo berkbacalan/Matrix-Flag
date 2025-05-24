@@ -3,12 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from app.core.deps import get_current_manager_user
 from app.models.ab_testing import (
     Experiment,
-    ExperimentStatus,
     ExperimentResult,
-    Variant,
-    VariantType,
-    ExperimentAssignment,
-    MetricValue,
 )
 from app.services.ab_testing import ab_testing_service
 
