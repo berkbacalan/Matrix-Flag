@@ -82,7 +82,10 @@ export class MatrixFlagClient {
             if (error instanceof MatrixFlagError) {
                 throw error;
             }
-            throw new NetworkError(error.message);
+            if (error instanceof Error) {
+                throw new NetworkError(error.message);
+            }
+            throw new NetworkError('Unknown network error occurred');
         }
     }
 
