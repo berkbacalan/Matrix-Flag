@@ -54,9 +54,7 @@ class AnalyticsService:
         """Record a metric value."""
         redis = await self._get_redis()
         metric_data = metric_value.model_dump()
-        await redis.lpush(
-            f"metric_values:{metric_value.metric_name}", json.dumps(metric_data)
-        )
+        await redis.lpush(f"metric_values:{metric_value.metric_name}", json.dumps(metric_data))
 
     async def get_metric_values(
         self,
@@ -74,9 +72,7 @@ class AnalyticsService:
             data = json.loads(value)
             timestamp = datetime.fromisoformat(data["timestamp"])
             if start_time <= timestamp <= end_time:
-                if labels is None or all(
-                    data["labels"].get(k) == v for k, v in labels.items()
-                ):
+                if labels is None or all(data["labels"].get(k) == v for k, v in labels.items()):
                     metric_values.append(MetricValue(**data))
 
         return sorted(metric_values, key=lambda x: x.timestamp)
@@ -102,9 +98,7 @@ class AnalyticsService:
             elif time_range == TimeRange.MONTH:
                 start_time = end_time - timedelta(days=30)
 
-        values = await self.get_metric_values(
-            metric_name, start_time, end_time, labels
-        )
+        values = await self.get_metric_values(metric_name, start_time, end_time, labels)
         if not values:
             return MetricAggregation(
                 metric_name=metric_name,
@@ -151,9 +145,7 @@ class AnalyticsService:
             return None
         return Dashboard(**dashboard_data)
 
-    async def update_dashboard(
-        self, name: str, dashboard: Dashboard
-    ) -> Optional[Dashboard]:
+    async def update_dashboard(self, name: str, dashboard: Dashboard) -> Optional[Dashboard]:
         """Update an existing dashboard."""
         redis = await self._get_redis()
         existing_dashboard = await self.get_dashboard(name)

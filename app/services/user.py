@@ -79,23 +79,15 @@ class UserService:
 
             # Convert string values back to appropriate types
             if "is_active" in user_data:
-                user_data["is_active"] = (
-                    user_data["is_active"].lower() == "true"
-                )
+                user_data["is_active"] = user_data["is_active"].lower() == "true"
 
             # Convert datetime strings back to datetime objects
             if "created_at" in user_data:
-                user_data["created_at"] = datetime.fromisoformat(
-                    user_data["created_at"]
-                )
+                user_data["created_at"] = datetime.fromisoformat(user_data["created_at"])
             if "updated_at" in user_data:
-                user_data["updated_at"] = datetime.fromisoformat(
-                    user_data["updated_at"]
-                )
+                user_data["updated_at"] = datetime.fromisoformat(user_data["updated_at"])
             if "last_login" in user_data and user_data["last_login"]:
-                user_data["last_login"] = datetime.fromisoformat(
-                    user_data["last_login"]
-                )
+                user_data["last_login"] = datetime.fromisoformat(user_data["last_login"])
 
             # Convert empty strings back to None
             for key, value in user_data.items():
@@ -117,9 +109,7 @@ class UserService:
             user_id = await redis.get(f"email:{email}")
             if not user_id:
                 duration = time.time() - start_time
-                record_redis_operation(
-                    "get_user_by_email", "not_found", duration
-                )
+                record_redis_operation("get_user_by_email", "not_found", duration)
                 return None
             duration = time.time() - start_time
             record_redis_operation("get_user_by_email", "success", duration)
@@ -129,9 +119,7 @@ class UserService:
             record_redis_operation("get_user_by_email", "error", duration)
             raise e
 
-    async def update_user(
-        self, user_id: str, update: UserUpdate
-    ) -> Optional[UserInDB]:
+    async def update_user(self, user_id: str, update: UserUpdate) -> Optional[UserInDB]:
         start_time = time.time()
         try:
             redis = await self._get_redis()
@@ -144,9 +132,7 @@ class UserService:
 
             update_data = update.model_dump(exclude_unset=True)
             if "password" in update_data:
-                update_data["hashed_password"] = get_password_hash(
-                    update_data.pop("password")
-                )
+                update_data["hashed_password"] = get_password_hash(update_data.pop("password"))
 
             user_dict = user.model_dump()
             user_dict.update(update_data)
@@ -238,9 +224,7 @@ class UserService:
         start_time = time.time()
         try:
             redis = await self._get_redis()
-            await redis.hset(
-                f"user:{user_id}", "last_login", datetime.utcnow().isoformat()
-            )
+            await redis.hset(f"user:{user_id}", "last_login", datetime.utcnow().isoformat())
 
             duration = time.time() - start_time
             record_redis_operation("update_last_login", "success", duration)

@@ -24,9 +24,7 @@ class ABTestingService:
             self.redis = await get_redis()
         return self.redis
 
-    def _calculate_variant_assignment(
-        self, experiment: Experiment, user_id: str
-    ) -> str:
+    def _calculate_variant_assignment(self, experiment: Experiment, user_id: str) -> str:
         """Calculate which variant a user should be assigned to based on weights."""
         if not experiment.variants:
             raise ValueError("Experiment must have at least one variant")
@@ -38,9 +36,7 @@ class ABTestingService:
 
         # Calculate total weight and create weighted distribution
         total_weight = sum(variant.weight for variant in experiment.variants)
-        weights = [
-            variant.weight / total_weight for variant in experiment.variants
-        ]
+        weights = [variant.weight / total_weight for variant in experiment.variants]
 
         # Select variant based on weights
         selected_variant = random.choices(
@@ -61,9 +57,7 @@ class ABTestingService:
 
         # Store experiment
         experiment_dict = experiment.model_dump()
-        await redis.hset(
-            f"experiment:{experiment.name}", mapping=experiment_dict
-        )
+        await redis.hset(f"experiment:{experiment.name}", mapping=experiment_dict)
         await redis.sadd("experiments", experiment.name)
 
         return experiment
@@ -76,9 +70,7 @@ class ABTestingService:
             return None
         return Experiment(**experiment_data)
 
-    async def update_experiment(
-        self, name: str, experiment: Experiment
-    ) -> Optional[Experiment]:
+    async def update_experiment(self, name: str, experiment: Experiment) -> Optional[Experiment]:
         """Update an existing experiment."""
         redis = await self._get_redis()
         existing_experiment = await self.get_experiment(name)
@@ -175,9 +167,7 @@ class ABTestingService:
             metric.model_dump_json(),
         )
 
-    async def get_experiment_results(
-        self, experiment_name: str
-    ) -> List[ExperimentResult]:
+    async def get_experiment_results(self, experiment_name: str) -> List[ExperimentResult]:
         """Calculate and return experiment results."""
         redis = await self._get_redis()
         experiment = await self.get_experiment(experiment_name)
@@ -187,9 +177,7 @@ class ABTestingService:
         results = []
         for variant in experiment.variants:
             # Get all assignments for this variant
-            assignments = await redis.hgetall(
-                f"experiment_assignments:{experiment_name}"
-            )
+            assignments = await redis.hgetall(f"experiment_assignments:{experiment_name}")
             variant_users = [
                 user_id
                 for user_id, assignment in assignments.items()
@@ -208,20 +196,12 @@ class ABTestingService:
                         -1,
                     )
                     if values:
-                        metric_values.extend(
-                            [json.loads(v)["value"] for v in values]
-                        )
+                        metric_values.extend([json.loads(v)["value"] for v in values])
 
                 if metric_values:
                     mean = statistics.mean(metric_values)
-                    stdev = (
-                        statistics.stdev(metric_values)
-                        if len(metric_values) > 1
-                        else 0
-                    )
-                    confidence_interval = 1.96 * (
-                        stdev / (len(metric_values) ** 0.5)
-                    )
+                    stdev = statistics.stdev(metric_values) if len(metric_values) > 1 else 0
+                    confidence_interval = 1.96 * (stdev / (len(metric_values) ** 0.5))
 
                     metrics[metric_name] = {
                         "value": mean,

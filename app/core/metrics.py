@@ -44,13 +44,9 @@ REDIS_OPERATION_LATENCY = Histogram(
 )
 
 # System Metrics
-SYSTEM_MEMORY_USAGE = Gauge(
-    "system_memory_usage_bytes", "System memory usage in bytes"
-)
+SYSTEM_MEMORY_USAGE = Gauge("system_memory_usage_bytes", "System memory usage in bytes")
 
-SYSTEM_CPU_USAGE = Gauge(
-    "system_cpu_usage_percent", "System CPU usage percentage"
-)
+SYSTEM_CPU_USAGE = Gauge("system_cpu_usage_percent", "System CPU usage percentage")
 
 
 def metrics_middleware():
@@ -68,9 +64,9 @@ def metrics_middleware():
             REQUEST_COUNT.labels(
                 method=request.method, endpoint=request.url.path, status=status
             ).inc()
-            REQUEST_LATENCY.labels(
-                method=request.method, endpoint=request.url.path
-            ).observe(duration)
+            REQUEST_LATENCY.labels(method=request.method, endpoint=request.url.path).observe(
+                duration
+            )
 
         return response
 

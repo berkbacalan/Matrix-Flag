@@ -31,9 +31,7 @@ async def register(user: UserCreate):
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     try:
         user = await user_service.get_user_by_email(form_data.username)
-        if not user or not verify_password(
-            form_data.password, user.hashed_password
-        ):
+        if not user or not verify_password(form_data.password, user.hashed_password):
             record_login_attempt("invalid_credentials")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
@@ -43,9 +41,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
 
         if not user.is_active:
             record_login_attempt("inactive_user")
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST, detail="Inactive user"
-            )
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Inactive user")
 
         await user_service.update_last_login(user.id)
         record_login_attempt("success")

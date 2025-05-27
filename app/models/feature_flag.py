@@ -14,14 +14,10 @@ class FlagType(str, Enum):
 class FeatureFlag(BaseModel):
     key: str = Field(..., description="Unique identifier for the feature flag")
     name: str = Field(..., description="Display name of the feature flag")
-    description: Optional[str] = Field(
-        None, description="Description of the feature flag"
-    )
+    description: Optional[str] = Field(None, description="Description of the feature flag")
     type: FlagType = Field(..., description="Type of the feature flag value")
     value: Any = Field(..., description="Value of the feature flag")
-    enabled: bool = Field(
-        default=True, description="Whether the feature flag is enabled"
-    )
+    enabled: bool = Field(default=True, description="Whether the feature flag is enabled")
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     tags: List[str] = Field(default_factory=list)

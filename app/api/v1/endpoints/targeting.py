@@ -12,9 +12,7 @@ router = APIRouter()
 
 
 @router.post("/rules", response_model=TargetingRule)
-async def create_rule(
-    rule: TargetingRule, current_user=Depends(get_current_manager_user)
-):
+async def create_rule(rule: TargetingRule, current_user=Depends(get_current_manager_user)):
     """Create a new targeting rule."""
     existing_rule = await targeting_service.get_rule(rule.name)
     if existing_rule:
@@ -36,9 +34,7 @@ async def get_rule(name: str, current_user=Depends(get_current_manager_user)):
     """Get a specific targeting rule."""
     rule = await targeting_service.get_rule(name)
     if not rule:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Rule not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Rule not found")
     return rule
 
 
@@ -51,22 +47,16 @@ async def update_rule(
     """Update a targeting rule."""
     updated_rule = await targeting_service.update_rule(name, rule)
     if not updated_rule:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Rule not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Rule not found")
     return updated_rule
 
 
 @router.delete("/rules/{name}")
-async def delete_rule(
-    name: str, current_user=Depends(get_current_manager_user)
-):
+async def delete_rule(name: str, current_user=Depends(get_current_manager_user)):
     """Delete a targeting rule."""
     success = await targeting_service.delete_rule(name)
     if not success:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Rule not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Rule not found")
     return {"status": "success"}
 
 
@@ -81,9 +71,7 @@ async def evaluate_rules(
 
 
 @router.post("/segments", response_model=UserSegment)
-async def create_segment(
-    segment: UserSegment, current_user=Depends(get_current_manager_user)
-):
+async def create_segment(segment: UserSegment, current_user=Depends(get_current_manager_user)):
     """Create a new user segment."""
     existing_segment = await targeting_service.get_segment(segment.name)
     if existing_segment:
@@ -101,15 +89,11 @@ async def list_segments(current_user=Depends(get_current_manager_user)):
 
 
 @router.get("/segments/{name}", response_model=UserSegment)
-async def get_segment(
-    name: str, current_user=Depends(get_current_manager_user)
-):
+async def get_segment(name: str, current_user=Depends(get_current_manager_user)):
     """Get a specific user segment."""
     segment = await targeting_service.get_segment(name)
     if not segment:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Segment not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Segment not found")
     return segment
 
 
@@ -122,20 +106,14 @@ async def update_segment(
     """Update a user segment."""
     updated_segment = await targeting_service.update_segment(name, segment)
     if not updated_segment:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Segment not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Segment not found")
     return updated_segment
 
 
 @router.delete("/segments/{name}")
-async def delete_segment(
-    name: str, current_user=Depends(get_current_manager_user)
-):
+async def delete_segment(name: str, current_user=Depends(get_current_manager_user)):
     """Delete a user segment."""
     success = await targeting_service.delete_segment(name)
     if not success:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Segment not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Segment not found")
     return {"status": "success"}

@@ -12,17 +12,13 @@ router = APIRouter()
 async def list_feature_flags(
     db: Session = Depends(deps.get_db),
     skip: int = Query(0, description="Number of records to skip", ge=0),
-    limit: int = Query(
-        100, description="Maximum number of records to return", ge=1, le=100
-    ),
+    limit: int = Query(100, description="Maximum number of records to return", ge=1, le=100),
     project_id: Optional[int] = Query(None, description="Filter by project ID"),
     environment: Optional[str] = Query(
         None,
         description="Filter by environment (e.g., 'production', 'staging')",
     ),
-    is_active: Optional[bool] = Query(
-        None, description="Filter by active status"
-    ),
+    is_active: Optional[bool] = Query(None, description="Filter by active status"),
 ) -> List[schemas.FeatureFlag]:
     """
     Retrieve a list of feature flags with optional filtering.
@@ -150,9 +146,7 @@ async def update_feature_flag(
     feature_flag = await crud.feature_flag.get(db, id=feature_flag_id)
     if not feature_flag:
         raise HTTPException(status_code=404, detail="Feature flag not found")
-    return await crud.feature_flag.update(
-        db, db_obj=feature_flag, obj_in=feature_flag_in
-    )
+    return await crud.feature_flag.update(db, db_obj=feature_flag, obj_in=feature_flag_in)
 
 
 @router.delete("/{feature_flag_id}", response_model=schemas.FeatureFlag)
