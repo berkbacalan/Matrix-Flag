@@ -11,13 +11,9 @@ router = APIRouter()
 
 
 @router.post("/experiments", response_model=Experiment)
-async def create_experiment(
-    experiment: Experiment, current_user=Depends(get_current_manager_user)
-):
+async def create_experiment(experiment: Experiment, current_user=Depends(get_current_manager_user)):
     """Create a new A/B test experiment."""
-    existing_experiment = await ab_testing_service.get_experiment(
-        experiment.name
-    )
+    existing_experiment = await ab_testing_service.get_experiment(experiment.name)
     if existing_experiment:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -33,15 +29,11 @@ async def list_experiments(current_user=Depends(get_current_manager_user)):
 
 
 @router.get("/experiments/{name}", response_model=Experiment)
-async def get_experiment(
-    name: str, current_user=Depends(get_current_manager_user)
-):
+async def get_experiment(name: str, current_user=Depends(get_current_manager_user)):
     """Get a specific A/B test experiment."""
     experiment = await ab_testing_service.get_experiment(name)
     if not experiment:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Experiment not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Experiment not found")
     return experiment
 
 
@@ -52,26 +44,18 @@ async def update_experiment(
     current_user=Depends(get_current_manager_user),
 ):
     """Update an A/B test experiment."""
-    updated_experiment = await ab_testing_service.update_experiment(
-        name, experiment
-    )
+    updated_experiment = await ab_testing_service.update_experiment(name, experiment)
     if not updated_experiment:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Experiment not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Experiment not found")
     return updated_experiment
 
 
 @router.delete("/experiments/{name}")
-async def delete_experiment(
-    name: str, current_user=Depends(get_current_manager_user)
-):
+async def delete_experiment(name: str, current_user=Depends(get_current_manager_user)):
     """Delete an A/B test experiment."""
     success = await ab_testing_service.delete_experiment(name)
     if not success:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Experiment not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Experiment not found")
     return {"status": "success"}
 
 
@@ -83,9 +67,7 @@ async def assign_variant(
     current_user=Depends(get_current_manager_user),
 ):
     """Assign a variant to a user for an experiment."""
-    variant_name = await ab_testing_service.assign_variant(
-        name, user_id, context
-    )
+    variant_name = await ab_testing_service.assign_variant(name, user_id, context)
     if not variant_name:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -105,30 +87,20 @@ async def record_metric(
     """Record a metric value for an experiment variant."""
     experiment = await ab_testing_service.get_experiment(name)
     if not experiment:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Experiment not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Experiment not found")
     if metric_name not in experiment.metrics:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Invalid metric name for this experiment",
         )
-    await ab_testing_service.record_metric(
-        name, variant_name, metric_name, value
-    )
+    await ab_testing_service.record_metric(name, variant_name, metric_name, value)
     return {"status": "success"}
 
 
-@router.get(
-    "/experiments/{name}/results", response_model=List[ExperimentResult]
-)
-async def get_experiment_results(
-    name: str, current_user=Depends(get_current_manager_user)
-):
+@router.get("/experiments/{name}/results", response_model=List[ExperimentResult])
+async def get_experiment_results(name: str, current_user=Depends(get_current_manager_user)):
     """Get the results of an A/B test experiment."""
     experiment = await ab_testing_service.get_experiment(name)
     if not experiment:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Experiment not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Experiment not found")
     return await ab_testing_service.get_experiment_results(name)

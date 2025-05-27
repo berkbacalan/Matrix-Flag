@@ -32,9 +32,7 @@ class Experiment(BaseModel):
     description: Optional[str] = None
     status: ExperimentStatus = ExperimentStatus.DRAFT
     variants: List[Variant]
-    targeting_rules: List[str] = Field(
-        default_factory=list
-    )  # List of targeting rule names
+    targeting_rules: List[str] = Field(default_factory=list)  # List of targeting rule names
     start_time: Optional[datetime] = None
     end_time: Optional[datetime] = None
     sample_size: Optional[int] = None  # Total number of users to include
