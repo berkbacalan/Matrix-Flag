@@ -69,8 +69,8 @@ jobs:
         autoflake --in-place --recursive --remove-all-unused-imports app tests
         
         # Fix formatting issues with aggressive line length handling
-        black --line-length 80 app tests
-        autopep8 --in-place --aggressive --aggressive --max-line-length 80 --recursive app tests
+        black --line-length 100 app tests
+        autopep8 --in-place --aggressive --aggressive --max-line-length 100 --recursive app tests
         
         # Check if there are any changes
         git add .
@@ -88,8 +88,8 @@ jobs:
     
     - name: Run linters
       run: |
-        flake8 --max-line-length=80 app tests
-        black --check --line-length 80 app tests
+        flake8 --max-line-length=100 app tests
+        black --check --line-length 100 app tests
     
     - name: Run tests
       env:
