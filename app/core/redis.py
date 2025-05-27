@@ -1,5 +1,5 @@
 import redis.asyncio as redis
-from .config import settings
+from ..core.config import settings
 
 redis_pool = None
 
@@ -12,9 +12,8 @@ async def init_redis_pool():
 
 
 async def get_redis():
-    if redis_pool is None:
-        await init_redis_pool()
-    return redis.Redis(connection_pool=redis_pool)
+    """Get Redis connection"""
+    return redis.from_url(settings.REDIS_URL, decode_responses=True)
 
 
 async def close_redis_pool():

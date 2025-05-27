@@ -12,5 +12,4 @@ def event_loop() -> Generator[asyncio.AbstractEventLoop, None, None]:
 
 # Configure pytest-asyncio
 def pytest_configure(config):
-    config.addinivalue_line("asyncio_mode", "strict")
-    config.addinivalue_line("asyncio_default_fixture_loop_scope", "function")
+    config.option.asyncio_mode = "strict"
