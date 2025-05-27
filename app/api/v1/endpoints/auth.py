@@ -32,7 +32,8 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     try:
         user = await user_service.get_user_by_email(form_data.username)
         if not user or not verify_password(
-                form_data.password, user.hashed_password):
+            form_data.password, user.hashed_password
+        ):
             record_login_attempt("invalid_credentials")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,

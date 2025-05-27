@@ -32,9 +32,7 @@ async def list_metrics(current_user=Depends(get_current_manager_user)):
 
 
 @router.get("/metrics/{name}", response_model=MetricDefinition)
-async def get_metric(
-        name: str,
-        current_user=Depends(get_current_manager_user)):
+async def get_metric(name: str, current_user=Depends(get_current_manager_user)):
     """Get a metric definition by name."""
     metric = await analytics_service.get_metric(name)
     if not metric:
@@ -54,7 +52,8 @@ async def record_metric_value(
         metric_name=name,
         value=value,
         labels=labels or {},
-        timestamp=datetime.utcnow())
+        timestamp=datetime.utcnow(),
+    )
     await analytics_service.record_metric(metric_value)
     return {"status": "success"}
 
@@ -68,7 +67,9 @@ async def get_metric_values(
     current_user=Depends(get_current_manager_user),
 ):
     """Get metric values within a time range."""
-    return await analytics_service.get_metric_values(name, start_time, end_time, labels)
+    return await analytics_service.get_metric_values(
+        name, start_time, end_time, labels
+    )
 
 
 @router.get("/metrics/{name}/aggregate", response_model=MetricAggregation)
@@ -103,8 +104,8 @@ async def list_dashboards(current_user=Depends(get_current_manager_user)):
 
 @router.get("/dashboards/{name}", response_model=Dashboard)
 async def get_dashboard(
-        name: str,
-        current_user=Depends(get_current_manager_user)):
+    name: str, current_user=Depends(get_current_manager_user)
+):
     """Get a dashboard by name."""
     dashboard = await analytics_service.get_dashboard(name)
     if not dashboard:
@@ -114,11 +115,14 @@ async def get_dashboard(
 
 @router.put("/dashboards/{name}", response_model=Dashboard)
 async def update_dashboard(
-        name: str,
-        dashboard: Dashboard,
-        current_user=Depends(get_current_manager_user)):
+    name: str,
+    dashboard: Dashboard,
+    current_user=Depends(get_current_manager_user),
+):
     """Update an existing dashboard."""
-    updated_dashboard = await analytics_service.update_dashboard(name, dashboard)
+    updated_dashboard = await analytics_service.update_dashboard(
+        name, dashboard
+    )
     if not updated_dashboard:
         raise HTTPException(status_code=404, detail="Dashboard not found")
     return updated_dashboard
@@ -126,8 +130,8 @@ async def update_dashboard(
 
 @router.delete("/dashboards/{name}")
 async def delete_dashboard(
-        name: str,
-        current_user=Depends(get_current_manager_user)):
+    name: str, current_user=Depends(get_current_manager_user)
+):
     """Delete a dashboard."""
     success = await analytics_service.delete_dashboard(name)
     if not success:
@@ -138,16 +142,14 @@ async def delete_dashboard(
 # Report endpoints
 @router.post("/reports", response_model=Report)
 async def create_report(
-        report: Report,
-        current_user=Depends(get_current_manager_user)):
+    report: Report, current_user=Depends(get_current_manager_user)
+):
     """Create a new report."""
     return await analytics_service.create_report(report)
 
 
 @router.get("/reports/{name}", response_model=Report)
-async def get_report(
-        name: str,
-        current_user=Depends(get_current_manager_user)):
+async def get_report(name: str, current_user=Depends(get_current_manager_user)):
     """Get a report by name."""
     report = await analytics_service.get_report(name)
     if not report:
@@ -157,8 +159,8 @@ async def get_report(
 
 @router.post("/reports/{name}/generate", response_model=ReportResult)
 async def generate_report(
-        name: str,
-        current_user=Depends(get_current_manager_user)):
+    name: str, current_user=Depends(get_current_manager_user)
+):
     """Generate a report."""
     try:
         return await analytics_service.generate_report(name)

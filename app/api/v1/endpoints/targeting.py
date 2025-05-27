@@ -44,9 +44,10 @@ async def get_rule(name: str, current_user=Depends(get_current_manager_user)):
 
 @router.put("/rules/{name}", response_model=TargetingRule)
 async def update_rule(
-        name: str,
-        rule: TargetingRule,
-        current_user=Depends(get_current_manager_user)):
+    name: str,
+    rule: TargetingRule,
+    current_user=Depends(get_current_manager_user),
+):
     """Update a targeting rule."""
     updated_rule = await targeting_service.update_rule(name, rule)
     if not updated_rule:
@@ -58,8 +59,8 @@ async def update_rule(
 
 @router.delete("/rules/{name}")
 async def delete_rule(
-        name: str,
-        current_user=Depends(get_current_manager_user)):
+    name: str, current_user=Depends(get_current_manager_user)
+):
     """Delete a targeting rule."""
     success = await targeting_service.delete_rule(name)
     if not success:
@@ -101,8 +102,8 @@ async def list_segments(current_user=Depends(get_current_manager_user)):
 
 @router.get("/segments/{name}", response_model=UserSegment)
 async def get_segment(
-        name: str,
-        current_user=Depends(get_current_manager_user)):
+    name: str, current_user=Depends(get_current_manager_user)
+):
     """Get a specific user segment."""
     segment = await targeting_service.get_segment(name)
     if not segment:
@@ -114,9 +115,10 @@ async def get_segment(
 
 @router.put("/segments/{name}", response_model=UserSegment)
 async def update_segment(
-        name: str,
-        segment: UserSegment,
-        current_user=Depends(get_current_manager_user)):
+    name: str,
+    segment: UserSegment,
+    current_user=Depends(get_current_manager_user),
+):
     """Update a user segment."""
     updated_segment = await targeting_service.update_segment(name, segment)
     if not updated_segment:
@@ -128,8 +130,8 @@ async def update_segment(
 
 @router.delete("/segments/{name}")
 async def delete_segment(
-        name: str,
-        current_user=Depends(get_current_manager_user)):
+    name: str, current_user=Depends(get_current_manager_user)
+):
     """Delete a user segment."""
     success = await targeting_service.delete_segment(name)
     if not success:
