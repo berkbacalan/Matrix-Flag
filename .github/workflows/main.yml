@@ -37,7 +37,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: ${{ github.head_ref }}
         token: ${{ secrets.GITHUB_TOKEN }}
     
     - name: Set up Python
@@ -76,7 +75,11 @@ jobs:
         else
           echo "Formatting changes detected, committing..."
           git commit -m "style: auto-format code with black and autopep8"
-          git push origin HEAD:${{ github.head_ref }}
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git push origin HEAD:${{ github.head_ref }}
+          else
+            git push origin main
+          fi
         fi
     
     - name: Run linters
