@@ -23,9 +23,7 @@ class AnalyticsService:
             self.redis = await get_redis()
         return self.redis
 
-    async def create_metric(
-            self,
-            metric: MetricDefinition) -> MetricDefinition:
+    async def create_metric(self, metric: MetricDefinition) -> MetricDefinition:
         """Create a new metric definition."""
         redis = await self._get_redis()
         metric_dict = metric.model_dump()
@@ -104,7 +102,9 @@ class AnalyticsService:
             elif time_range == TimeRange.MONTH:
                 start_time = end_time - timedelta(days=30)
 
-        values = await self.get_metric_values(metric_name, start_time, end_time, labels)
+        values = await self.get_metric_values(
+            metric_name, start_time, end_time, labels
+        )
         if not values:
             return MetricAggregation(
                 metric_name=metric_name,
@@ -214,7 +214,11 @@ class AnalyticsService:
         for metric_name in report.metrics:
             try:
                 aggregation = await self.aggregate_metric(
-                    metric_name, report.time_range, start_time, end_time, report.filters
+                    metric_name,
+                    report.time_range,
+                    start_time,
+                    end_time,
+                    report.filters,
                 )
                 metrics[metric_name] = aggregation
             except Exception as e:

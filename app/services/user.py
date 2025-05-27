@@ -79,7 +79,9 @@ class UserService:
 
             # Convert string values back to appropriate types
             if "is_active" in user_data:
-                user_data["is_active"] = user_data["is_active"].lower() == "true"
+                user_data["is_active"] = (
+                    user_data["is_active"].lower() == "true"
+                )
 
             # Convert datetime strings back to datetime objects
             if "created_at" in user_data:
@@ -116,7 +118,8 @@ class UserService:
             if not user_id:
                 duration = time.time() - start_time
                 record_redis_operation(
-                    "get_user_by_email", "not_found", duration)
+                    "get_user_by_email", "not_found", duration
+                )
                 return None
             duration = time.time() - start_time
             record_redis_operation("get_user_by_email", "success", duration)
@@ -127,9 +130,8 @@ class UserService:
             raise e
 
     async def update_user(
-            self,
-            user_id: str,
-            update: UserUpdate) -> Optional[UserInDB]:
+        self, user_id: str, update: UserUpdate
+    ) -> Optional[UserInDB]:
         start_time = time.time()
         try:
             redis = await self._get_redis()

@@ -39,12 +39,14 @@ class ABTestingService:
         # Calculate total weight and create weighted distribution
         total_weight = sum(variant.weight for variant in experiment.variants)
         weights = [
-            variant.weight /
-            total_weight for variant in experiment.variants]
+            variant.weight / total_weight for variant in experiment.variants
+        ]
 
         # Select variant based on weights
         selected_variant = random.choices(
-            [variant.name for variant in experiment.variants], weights=weights, k=1
+            [variant.name for variant in experiment.variants],
+            weights=weights,
+            k=1,
         )[0]
 
         return selected_variant
@@ -59,7 +61,9 @@ class ABTestingService:
 
         # Store experiment
         experiment_dict = experiment.model_dump()
-        await redis.hset(f"experiment:{experiment.name}", mapping=experiment_dict)
+        await redis.hset(
+            f"experiment:{experiment.name}", mapping=experiment_dict
+        )
         await redis.sadd("experiments", experiment.name)
 
         return experiment
@@ -140,7 +144,8 @@ class ABTestingService:
         assignment = ExperimentAssignment(
             experiment_id=experiment_name,
             user_id=user_id,
-            variant_name=variant_name)
+            variant_name=variant_name,
+        )
         await redis.set(assignment_key, variant_name)
         await redis.hset(
             f"experiment_assignments:{experiment_name}",
@@ -151,11 +156,12 @@ class ABTestingService:
         return variant_name
 
     async def record_metric(
-            self,
-            experiment_name: str,
-            variant_name: str,
-            metric_name: str,
-            value: float) -> None:
+        self,
+        experiment_name: str,
+        variant_name: str,
+        metric_name: str,
+        value: float,
+    ) -> None:
         """Record a metric value for an experiment variant."""
         redis = await self._get_redis()
         metric = MetricValue(
@@ -203,14 +209,19 @@ class ABTestingService:
                     )
                     if values:
                         metric_values.extend(
-                            [json.loads(v)["value"] for v in values])
+                            [json.loads(v)["value"] for v in values]
+                        )
 
                 if metric_values:
                     mean = statistics.mean(metric_values)
-                    stdev = (statistics.stdev(metric_values)
-                             if len(metric_values) > 1 else 0)
-                    confidence_interval = 1.96 * \
-                        (stdev / (len(metric_values) ** 0.5))
+                    stdev = (
+                        statistics.stdev(metric_values)
+                        if len(metric_values) > 1
+                        else 0
+                    )
+                    confidence_interval = 1.96 * (
+                        stdev / (len(metric_values) ** 0.5)
+                    )
 
                     metrics[metric_name] = {
                         "value": mean,

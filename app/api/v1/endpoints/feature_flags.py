@@ -17,9 +17,12 @@ async def list_feature_flags(
     ),
     project_id: Optional[int] = Query(None, description="Filter by project ID"),
     environment: Optional[str] = Query(
-        None, description="Filter by environment (e.g., 'production', 'staging')"
+        None,
+        description="Filter by environment (e.g., 'production', 'staging')",
     ),
-    is_active: Optional[bool] = Query(None, description="Filter by active status"),
+    is_active: Optional[bool] = Query(
+        None, description="Filter by active status"
+    ),
 ) -> List[schemas.FeatureFlag]:
     """
     Retrieve a list of feature flags with optional filtering.

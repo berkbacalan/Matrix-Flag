@@ -35,25 +35,41 @@ class TargetingService:
         elif condition.operator == TargetingOperator.NOT_EQUALS:
             return value != target_value
         elif condition.operator == TargetingOperator.CONTAINS:
-            return target_value in value if isinstance(
-                value, (list, str)) else False
+            return (
+                target_value in value
+                if isinstance(value, (list, str))
+                else False
+            )
         elif condition.operator == TargetingOperator.NOT_CONTAINS:
-            return target_value not in value if isinstance(
-                value, (list, str)) else True
+            return (
+                target_value not in value
+                if isinstance(value, (list, str))
+                else True
+            )
         elif condition.operator == TargetingOperator.GREATER_THAN:
-            return value > target_value if isinstance(
-                value, (int, float)) else False
+            return (
+                value > target_value
+                if isinstance(value, (int, float))
+                else False
+            )
         elif condition.operator == TargetingOperator.LESS_THAN:
-            return value < target_value if isinstance(
-                value, (int, float)) else False
+            return (
+                value < target_value
+                if isinstance(value, (int, float))
+                else False
+            )
         elif condition.operator == TargetingOperator.IN:
-            return value in target_value if isinstance(
-                target_value, list) else False
+            return (
+                value in target_value
+                if isinstance(target_value, list)
+                else False
+            )
         elif condition.operator == TargetingOperator.NOT_IN:
             return (
-                value not in target_value if isinstance(
-                    target_value,
-                    list) else False)
+                value not in target_value
+                if isinstance(target_value, list)
+                else False
+            )
         elif condition.operator == TargetingOperator.BETWEEN:
             if not isinstance(target_value, list) or len(target_value) != 2:
                 return False
@@ -115,8 +131,7 @@ class TargetingService:
                     rule_id=rule.name,
                     result=False,
                     matched_conditions=[],
-                    unmatched_conditions=[
-                        c.attribute for c in rule.conditions],
+                    unmatched_conditions=[c.attribute for c in rule.conditions],
                     evaluation_time=now,
                 )
 

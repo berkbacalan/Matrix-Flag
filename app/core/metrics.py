@@ -19,8 +19,10 @@ REQUEST_LATENCY = Histogram(
 
 # User Metrics
 USER_OPERATIONS = Counter(
-    "user_operations_total", "Total number of user operations", [
-        "operation", "status"])
+    "user_operations_total",
+    "Total number of user operations",
+    ["operation", "status"],
+)
 
 USER_LOGIN_ATTEMPTS = Counter(
     "user_login_attempts_total", "Total number of login attempts", ["status"]
@@ -43,12 +45,12 @@ REDIS_OPERATION_LATENCY = Histogram(
 
 # System Metrics
 SYSTEM_MEMORY_USAGE = Gauge(
-    "system_memory_usage_bytes",
-    "System memory usage in bytes")
+    "system_memory_usage_bytes", "System memory usage in bytes"
+)
 
 SYSTEM_CPU_USAGE = Gauge(
-    "system_cpu_usage_percent",
-    "System CPU usage percentage")
+    "system_cpu_usage_percent", "System CPU usage percentage"
+)
 
 
 def metrics_middleware():
